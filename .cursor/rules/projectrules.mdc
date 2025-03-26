@@ -4,7 +4,6 @@ globs:
 alwaysApply: true
 ---
 
-# Your rule content
 
 - 养成良好的习惯
     每次新增或者修改功能后，在 [records.txt](mdc:records.txt) 中做好相应的记录，每次修改内容前，先阅读记录，以确保不会漏改或者重复修改
