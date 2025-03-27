@@ -43,7 +43,7 @@ const handleCategoryChange = (category: string) => {
 <style scoped>
 .app {
   background-color: var(--theme-bg-color);
-  max-width: 1250px;
+  max-width: 1600px;
   max-height: 860px;
   height: 90vh;
   display: flex;
