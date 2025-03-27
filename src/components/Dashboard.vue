@@ -18,12 +18,7 @@ const handleCategoryChange = (category: string) => {
 </script>
 
 <template>
-  <div class="video-bg">
-    <video width="320" height="240" autoplay loop muted>
-      <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
-      您的浏览器不支持视频标签。
-    </video>
-  </div>
+  <div class="bg-image"></div>
   
   <div class="dark-light" @click="toggleLightMode">
     <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -64,18 +59,17 @@ const handleCategoryChange = (category: string) => {
   overflow: hidden;
 }
 
-.video-bg {
+.bg-image {
   position: fixed;
   right: 0;
   top: 0;
   width: 100%;
   height: 100%;
-}
-
-.video-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  background-image: url('https://images.unsplash.com/22/good-mornin.JPG?auto=format&fit=crop&w=1650');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
 }
 
 .dark-light {
