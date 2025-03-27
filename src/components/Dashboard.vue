@@ -5,10 +5,15 @@ import AppHeader from './AppHeader.vue'
 import MainContent from './MainContent.vue'
 
 const isLightMode = ref(false)
+const currentCategory = ref('all')
 
 const toggleLightMode = () => {
   isLightMode.value = !isLightMode.value
   document.body.classList.toggle('light-mode', isLightMode.value)
+}
+
+const handleCategoryChange = (category: string) => {
+  currentCategory.value = category
 }
 </script>
 
@@ -29,8 +34,8 @@ const toggleLightMode = () => {
   <div class="app" :class="{ 'light-mode': isLightMode }">
     <AppHeader />
     <div class="wrapper">
-      <SideMenu />
-      <MainContent />
+      <SideMenu @category-change="handleCategoryChange" />
+      <MainContent :category="currentCategory" />
     </div>
   </div>
 </template>

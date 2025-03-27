@@ -1,13 +1,116 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import AppCard from './AppCard.vue'
+
+interface Props {
+  category?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  category: 'all'
+})
+
+// 根据类别计算要显示的内容
+const contentTitle = computed(() => {
+  const titles: Record<string, string> = {
+    'all': '所有应用',
+    'updates': '待更新应用',
+    'photography': '摄影应用',
+    'graphic': '平面设计应用',
+    'video': '视频应用',
+    'illustration': '插图应用',
+    'ui-ux': 'UI/UX应用',
+    '3d-ar': '3D/AR应用',
+    'fonts': '字体管理',
+    'stock': '素材库资源',
+    'tutorials': '教程资源',
+    'portfolio': '作品集工具',
+    'behance': 'Behance资源',
+    'forum': '社区论坛资源'
+  }
+  
+  return titles[props.category] || '所有应用'
+})
+
+// 根据类别过滤卡片
+const filteredCards = computed(() => {
+  const allCards = [
+    { 
+      id: 'premiere', 
+      title: 'Premiere Pro', 
+      subtext: '视频编辑软件',
+      icon: 'https://assets.codepen.io/3364143/1.png',
+      categories: ['all', 'video']
+    },
+    { 
+      id: 'after-effects', 
+      title: 'After Effects', 
+      subtext: '视觉效果软件',
+      icon: 'https://assets.codepen.io/3364143/2.png',
+      categories: ['all', 'video']
+    },
+    { 
+      id: 'dreamweaver', 
+      title: 'Dreamweaver', 
+      subtext: '网页设计软件',
+      icon: 'https://assets.codepen.io/3364143/3.png',
+      categories: ['all', 'ui-ux']
+    },
+    { 
+      id: 'xd', 
+      title: 'XD', 
+      subtext: 'UI/UX设计软件',
+      icon: 'https://assets.codepen.io/3364143/4.png',
+      categories: ['all', 'ui-ux']
+    },
+    { 
+      id: 'premiere-rush', 
+      title: 'Premiere Rush', 
+      subtext: '视频编辑软件',
+      icon: 'https://assets.codepen.io/3364143/5.png',
+      categories: ['all', 'video']
+    },
+    { 
+      id: 'fresco', 
+      title: 'Fresco', 
+      subtext: '绘画软件',
+      icon: 'https://assets.codepen.io/3364143/6.png',
+      categories: ['all', 'illustration']
+    },
+    { 
+      id: 'photoshop', 
+      title: 'Photoshop', 
+      subtext: '图像编辑软件',
+      icon: 'https://assets.codepen.io/3364143/7.png',
+      categories: ['all', 'photography', 'graphic']
+    },
+    { 
+      id: 'lightroom', 
+      title: 'Lightroom', 
+      subtext: '摄影后期软件',
+      icon: 'https://assets.codepen.io/3364143/8.png',
+      categories: ['all', 'photography']
+    }
+  ]
+  
+  if (props.category === 'all') {
+    return allCards.filter(card => card.categories.includes('all')).slice(0, 6)
+  }
+  
+  return allCards.filter(card => card.categories.includes(props.category))
+})
+
+// 是否显示已安装应用部分
+const showInstalledApps = computed(() => {
+  return ['all', 'updates'].includes(props.category)
+})
 </script>
 
 <template>
   <div class="main-container">
     <!-- 主头部 -->
     <div class="main-header">
-      <a class="menu-link-main" href="#">所有应用</a>
+      <a class="menu-link-main" href="#">{{ contentTitle }}</a>
       <div class="header-menu">
         <a class="main-header-link is-active" href="#">桌面端</a>
         <a class="main-header-link" href="#">移动端</a>
@@ -18,7 +121,7 @@ import AppCard from './AppCard.vue'
     <!-- 内容区域 -->
     <div class="content-wrapper">
       <!-- 头部卡片 -->
-      <div class="content-wrapper-header">
+      <div class="content-wrapper-header" v-if="category === 'all' || category === 'stock'">
         <div class="content-wrapper-context">
           <h3 class="img-content">
             <svg viewBox="0 0 512 512">
@@ -37,8 +140,14 @@ import AppCard from './AppCard.vue'
         <img class="content-wrapper-img" src="https://assets.codepen.io/3364143/glass.png" alt="">
       </div>
       
+      <!-- 类别介绍文本 -->
+      <div class="category-info" v-if="category !== 'all' && category !== 'updates' && category !== 'stock'">
+        <h3>{{ contentTitle }}</h3>
+        <p>这里是所有与"{{ contentTitle }}"相关的应用程序。您可以浏览并安装这些应用来增强您的创意工作流程。</p>
+      </div>
+      
       <!-- 已安装应用部分 -->
-      <div class="content-section">
+      <div class="content-section" v-if="showInstalledApps">
         <div class="content-section-title">已安装</div>
         <ul>
           <!-- Photoshop -->
@@ -116,37 +225,14 @@ import AppCard from './AppCard.vue'
       
       <!-- 推荐应用部分 -->
       <div class="content-section">
-        <div class="content-section-title">推荐应用</div>
+        <div class="content-section-title">{{ category === 'all' ? '推荐应用' : contentTitle }}</div>
         <div class="apps-card">
           <AppCard 
-            title="Premiere Pro" 
-            subtext="视频编辑软件"
-            icon="https://assets.codepen.io/3364143/1.png"
-          />
-          <AppCard 
-            title="After Effects" 
-            subtext="视觉效果软件"
-            icon="https://assets.codepen.io/3364143/2.png"
-          />
-          <AppCard 
-            title="Dreamweaver" 
-            subtext="网页设计软件"
-            icon="https://assets.codepen.io/3364143/3.png"
-          />
-          <AppCard 
-            title="XD" 
-            subtext="UI/UX设计软件"
-            icon="https://assets.codepen.io/3364143/4.png"
-          />
-          <AppCard 
-            title="Premiere Rush" 
-            subtext="视频编辑软件"
-            icon="https://assets.codepen.io/3364143/5.png"
-          />
-          <AppCard 
-            title="Fresco" 
-            subtext="绘画软件"
-            icon="https://assets.codepen.io/3364143/6.png"
+            v-for="card in filteredCards" 
+            :key="card.id"
+            :title="card.title" 
+            :subtext="card.subtext"
+            :icon="card.icon"
           />
         </div>
       </div>
@@ -244,6 +330,23 @@ import AppCard from './AppCard.vue'
   object-fit: cover;
   margin-top: -25px;
   object-position: center;
+}
+
+.category-info {
+  margin: 20px 0;
+  background-color: var(--content-bg);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.category-info h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.category-info p {
+  color: var(--inactive-color);
+  line-height: 1.5;
 }
 
 .content-section {

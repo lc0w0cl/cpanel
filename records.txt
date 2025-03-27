@@ -1,0 +1,14 @@
+# 功能实现记录
+
+## 2023-12-18: 实现SideMenu组件点击功能
+- 在SideMenu.vue中添加了activeCategory状态跟踪当前选择的类别
+- 为所有菜单项添加了点击事件处理函数handleCategoryClick
+- 添加了类别变更事件category-change
+- 为活动菜单项添加了视觉反馈（active类）
+
+## 2023-12-18: 实现根据类别显示不同内容功能
+- 修改Dashboard.vue组件接收并传递类别信息
+- 更新MainContent.vue组件，接收category属性
+- 添加根据类别过滤和显示不同应用卡片的功能
+- 添加根据类别显示不同标题和介绍的功能
+- 增加了类别专属的介绍信息面板
