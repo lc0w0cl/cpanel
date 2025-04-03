@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+项目规则
+
+- 创建一个文件 records.txt ，在每次新增或者修改功能的时候，记录对应的信息；每次修改前，先读取文件内容，防止重复更改
+- 在项目中， c-backend 是服务后台目录， c-front 是前端目录
