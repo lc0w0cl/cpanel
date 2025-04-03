@@ -1,0 +1,16 @@
+前端整体类似于Adobe Creative Cloud的磨砂玻璃风格,内容以Element UI组件为主，背景使用 Inspira UI的wavy-background，可以参考文档https://inspira-ui.com/components/backgrounds/wavy-background，整体风格可以参考图片 @refenerce.png
+
+注意：
+如果使用postcss和tailwindcss，要注意版本之间得冲突，否则npx tailwindcss init -p会报错
+
+左侧导航
+ - 导航面板
+    - 每一个导航图标类似于Apple的App图标风格
+    - 右上角有一个“内网外切换”功能按钮
+    - 导航可以有分组
+    - 导航可以拖动排序，或者从一个组里拖动到另一个组,使用VueDraggable实现
+    - 导航分组也可以拖动排序也使用VueDraggable实现
+ - 任务看板
+
+顶部
+ - 类似于Google的搜索框
